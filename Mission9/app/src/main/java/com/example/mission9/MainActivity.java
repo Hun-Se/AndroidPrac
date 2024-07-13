@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     TextView output5;
     TextView output6;
 
+    TextView textView10;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         output4 = findViewById(R.id.output4);
         output5 = findViewById(R.id.output5);
         output6 = findViewById(R.id.output6);
+
+        textView10 = findViewById(R.id.textView10);
 
         Button button = findViewById(R.id.button);
         button.setOnClickListener(view -> {
@@ -72,65 +76,80 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        int[] outputsNum = new int[6];
 
-        for(int i = 0; i < 6; i++) {
-            double ran = Math.floor(Math.random() * input1);
-            outputsNum[i] = (int)(Math.random() * input1);
-            for(int j = 0; j < i; j++) {
-                if (outputsNum[j] == outputsNum[i]) {
-                    i--;
-                    break;
+        String[] textList = new String[6];
+        // 6 이하일때는 무한루프 발생
+        if (input1 > 6) {
+
+            for (int i = 0; i < textList.length; i++) {
+                System.out.println(i);
+                textList[i] = Integer.toString((int)(Math.random() * input1 + 1));
+                for (int j = 0; j < i; j++) {
+                    if (textList[i].equals(textList[j])) {
+                        System.out.println("중복발생");
+                        i--;
+                        break;
+                    }
                 }
+            }
 
+
+        } else {
+            for (int i = 0; i < textList.length-(textList.length-input1); i++) {
+                System.out.println(i);
+                textList[i] = Integer.toString((int)(Math.random() * input1 + 1));
+                for (int j = 0; j < i; j++) {
+                    if (textList[i].equals(textList[j])) {
+                        System.out.println("중복발생");
+                        i--;
+                        break;
+                    }
+                }
+            }
+
+            // 나머지 "" 넣기
+            for (int i = 6; (i-input1) < 0; i--) {
+                textList[i-1] = "";
             }
         }
 
-        output1.setText(output1);
-        ArrayList<TextView> outputlist = new ArrayList();
+        TextView[] outputList = {output1, output2, output3, output4, output5, output6};
 
+        for(int i = 0; i < outputList.length; i++) {
+            outputList[i].setText(textList[i]);
+        }
 
-//        for (int i = 0; i < outputs.length; i ++) {
-//            int randomNum = new Double(Math.floor(Math.random() * input1)).intValue();
-//            System.out.println(Math.floor(Math.random() * input1));
-//            System.out.println(randomNum);
-//            if (outputs.equals(randomNum)) {
-//               boolean duplicate = true;
-//                while (duplicate) {
-//                    System.out.println("증복 발생");
-//                   int newRandom = new Double(Math.floor(Math.random() * input1)).intValue();
-//                    duplicate = outputs.equals(newRandom);
-//               }
-//            } else {
-//                outputs[i].setText(randomNum);
+//        ArrayList<String> textList = new ArrayList<String>();
+//
+//        if (input1 > 6) {
+//            for (int i = 0; i < 6; i++) {
+//                String numStr = ("" + (int) ((Math.random() * input1) + 1));
+//                if (textList.contains(numStr)) {
+//                    i--; // 중복 발생 시 재반복을 위해 i를 1 감소
+//                    continue; // 아래 로직을 수행하지 않고 다음 순환 으로 넘어감(다음 i로 넘어간다)
+//                }
+//                textList.add(numStr);
 //            }
-//            outputs[i].setText(String.valueOf(randomNum));
+//        } else {
+//            for (int i = 0; i < input1; i++) {
+//                String numStr = ("" + (int) ((Math.random() * input1) + 1));
+//                if (textList.contains(numStr)) {
+//                    i--; // 중복 발생 시 재반복을 위해 i를 1 감소
+//                    continue; // 아래 로직을 수행하지 않고 다음 순환 으로 넘어감(다음 i로 넘어간다)
+//                }
+//                textList.add(numStr);
+//            }
+//            // 남은 자리를 null로 채우기
+//            while (textList.size() < 6) {
+//                textList.add(null);
+//            }
 //        }
-
-
-
-
-//        double ran1 = Math.floor(Math.random() * input1);
-//        double ran2 = Math.floor(Math.random() * input1);
-//        double ran3 = Math.floor(Math.random() * input1);
-//        double ran4 = Math.floor(Math.random() * input1);
-//        double ran5 = Math.floor(Math.random() * input1);
-//        double ran6 = Math.floor(Math.random() * input1);
-
-//        int no3 = new Double(ran1).intValue();
-//        int no4 = new Double(ran2).intValue();
-//        int no5 = new Double(ran3).intValue();
-//        int no6 = new Double(ran4).intValue();
-//        int no7 = new Double(ran5).intValue();
-//        int no8 = new Double(ran6).intValue();
-
-
-//        output1.setText("" + no3);
-//        output2.setText("" + no4);
-//        output3.setText("" + no5);
-//        output4.setText("" + no6);
-//        output5.setText("" + no7);
-//        output6.setText("" + no8);
-
+//
+//        TextView[] outputList = {output1, output2, output3, output4, output5, output6};
+//
+//        for(int i = 0; i < outputList.length; i++) {
+                // 삼항 연산자 -> 조건 ? true 일때 : false 일때
+//            outputList[i].setText(textList.get(i) != null ? textList.get(i): "");
+//        }5
     }
 }
